@@ -46,10 +46,12 @@ def preprocesar(imagen):
 
     # Redimensionar conservando proporciones,
     # igual que tf.image.resize_with_pad del entrenamiento
+    
     arreglo = tf.image.resize_with_pad(
         arreglo,
         IMG_SIZE[0],
-        IMG_SIZE[1]
+        IMG_SIZE[1],
+        antialias=True
     ).numpy()
 
     # Agregar dimensión del lote
