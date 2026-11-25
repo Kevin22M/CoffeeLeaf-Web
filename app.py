@@ -15,7 +15,7 @@ ENFERMEDADES = ["Roya", "Coco", "Minador"]
 # Umbrales seleccionados durante la validación
 UMBRALES = np.array([0.17, 0.64, 0.33], dtype=np.float32)
 
-RUTA_MODELO = "CoffeeLeaf_EfficientNetB0_Final.keras"
+RUTA_MODELO = "modelo/CoffeeLeaf_EfficientNetB0_Final.keras"
 
 st.set_page_config(
     page_title="CoffeeLeaf - Detector de enfermedades",
