@@ -100,7 +100,7 @@ st.markdown(
 @st.cache_resource
 def cargar_modelo():
     modelo = tf.keras.models.load_model(RUTA_MODELO)
-    umbrales = np.load(UMBRALES)
+    umbrales = UMBRALES
     return modelo, umbrales
 
 # ==========================================
