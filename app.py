@@ -15,7 +15,7 @@ ENFERMEDADES = ["Roya", "Coco", "Minador"]
 # Umbrales seleccionados durante la validación
 RUTA_UMBRALES = "modelo/umbrales_clasificacion.npy"
 
-RUTA_MODELO = "modelo/CoffeeLeaf_EfficientNetB0.keras"
+RUTA_MODELO = "modelo/CoffeeLeaf_EfficientNetB0_Final.keras"
 
 st.set_page_config(
     page_title="CoffeeLeaf - Detector de enfermedades",
