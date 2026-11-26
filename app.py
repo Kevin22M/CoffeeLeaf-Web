@@ -100,8 +100,18 @@ st.markdown(
 @st.cache_resource
 def cargar_modelo():
     modelo = tf.keras.models.load_model(RUTA_MODELO)
-    umbrales = UMBRALES
-    return modelo, umbrales
+
+    # Verificar que el modelo corresponda al tamaño configurado
+    tamano = tuple(modelo.input_shape[1:3])
+
+    if tamano != IMG_SIZE:
+        raise ValueError(
+            f"{RUTA_MODELO} espera imágenes de {tamano} y la app usa "
+            f"{IMG_SIZE}. Copia en la carpeta 'modelo' el archivo "
+            "entrenado con ese tamaño."
+        )
+
+    return modelo
 
 # ==========================================
 # PREPROCESAMIENTO
@@ -131,7 +141,7 @@ def preprocesar(imagen):
 # REALIZAR PREDICCIÓN
 # ==========================================
 
-def predecir(modelo, umbrales, imagen):
+def predecir(modelo, imagen):
 
     entrada = preprocesar(imagen)
 
@@ -139,7 +149,7 @@ def predecir(modelo, umbrales, imagen):
     probabilidades = modelo.predict(entrada, verbose=0)[0]
 
     # Aplicar umbral individual a cada enfermedad
-    detectadas = probabilidades >= umbrales
+    detectadas = probabilidades >= UMBRALES
 
     return probabilidades, detectadas
 
@@ -196,9 +206,9 @@ st.info(
     "en una misma fotografía."
 )
 
-# Cargar modelo y umbrales
+# Cargar modelo
 try:
-    modelo, umbrales = cargar_modelo()
+    modelo = cargar_modelo()
 
 except Exception as e:
     st.error(f"No fue posible cargar el modelo: {e}")
@@ -242,7 +252,6 @@ if archivo is not None:
 
                     probabilidades, detectadas = predecir(
                         modelo,
-                        umbrales,
                         imagen
                     )
 
@@ -272,7 +281,7 @@ if archivo is not None:
                     mostrar_tarjeta(
                         enfermedad,
                         float(probabilidades[i]),
-                        float(umbrales[i]),
+                        float(UMBRALES[i]),
                         bool(detectadas[i])
                     )
 
